@@ -54,6 +54,9 @@ class LogStash::Outputs::Amqp < LogStash::Outputs::Base
   # Validate SSL certificate
   config :verify_ssl, :validate => :boolean, :default => false
 
+  # AMQP spec
+  config :spec, :validate => :string, :default => "09"
+
   public
   def register
     require "bunny" # rubygem 'bunny'
@@ -69,6 +72,7 @@ class LogStash::Outputs::Amqp < LogStash::Outputs::Base
       :host => @host,
       :port => @port,
       :logging => @debug,
+      :spec => @spec,
     }
     amqpsettings[:user] = @user if @user
     amqpsettings[:pass] = @password.value if @password
